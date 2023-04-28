@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -10,6 +11,10 @@ export default function Home() {
       </Head>
 
       <main>
+        <h1 className={styles.title}>
+          First Post <Link href="/posts/first-page">첫번째 글</Link>
+        </h1>
+
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
@@ -47,6 +52,10 @@ export default function Home() {
             </p>
           </a>
         </div>
+
+        <h1 className={styles.title}>
+          First Post <Link href="/posts/second-page">두번째 글</Link>
+        </h1>
       </main>
 
       <footer>
