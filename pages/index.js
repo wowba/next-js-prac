@@ -2,20 +2,23 @@ import Head from 'next/head';
 import Layout, { siteTitle } from '../components/Layout';
 import utilStyles from '../styles/utils.module.css';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import Date from '../components/Date';
 
 // CSR 로 할때는 서버에서 불러올 수 있는 lib 사용 불가. 
 // SSG, SSR 사용시 노드 서버에서 해당 라이브러리르 불러오기 때문에 사용 가능
-// import { getSortedPostsData } from '../lib/posts';
+import { getSortedPostsData } from '../lib/posts';
 
 // SSG - getStaticProps() 활용
-// export async function getStaticProps() {
-//   const allPostsData = getSortedPostsData()
-//   return {
-//     props: {
-//       allPostsData
-//     }
-//   }
-// }
+// 파라미터로 빈 객체를 넣어주지 않으면 props를 제대로 인식하지 못한다.
+export async function getStaticProps({}) {
+  const allPostsData = getSortedPostsData()
+  return {
+    props: {
+      allPostsData
+    }
+  }
+}
 
 // SSR - getServerSideProps() 활용
 // export async function getServerSideProps() {
@@ -27,15 +30,15 @@ import { useEffect, useState } from 'react';
 //   }
 // }
 
-export default function Home(props) {
+export default function Home({allPostsData}) {
 
   // CSR - API routes 활용
-  const [allPostsData, setAllPostsData] = useState([])
-  useEffect(() => {
-    fetch('/api/posts')
-      .then(res => res.json())
-      .then((data) => setAllPostsData(data.allPostsData))
-  }, [])
+  // const [allPostsData, setAllPostsData] = useState([])
+  // useEffect(() => {
+  //   fetch('/api/posts')
+  //     .then(res => res.json())
+  //     .then((data) => setAllPostsData(data.allPostsData))
+  // }, [])
 
   return (
     <Layout home>
@@ -55,12 +58,12 @@ export default function Home(props) {
         <ul className={utilStyles.list}>
           {allPostsData.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              {title}
+              <Link href={`/posts/${id}`}>{title}</Link>
               <br />
-              {id}
-              <br />
-              {date}
-            </li>
+              <small className={utilStyles.lightText}>
+                <Date dateString={date} />
+              </small>
+          </li>
           ))}
         </ul>
       </section>
