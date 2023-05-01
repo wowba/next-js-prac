@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://next-js-prac-delta.vercel.app
+
+# Sitemaps
+Sitemap: https://next-js-prac-delta.vercel.app/sitemap.xml
