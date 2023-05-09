@@ -3,6 +3,9 @@ import Layout from "../../components/Layout"
 import { getAllPostIds, getPostData } from '../../lib/posts';
 import Date from "../../components/Date";
 import utilStyles from '../../styles/utils.module.css';
+import dynamic from "next/dynamic";
+
+const Button = dynamic(() => import('../../components/Button'))
 
 export async function getStaticPaths() {
   const paths = getAllPostIds();
@@ -12,7 +15,7 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, preview }) {
   const postData = await getPostData(params.id);
   return {
     props: {
@@ -27,6 +30,7 @@ export default function Post({ postData }) {
       <Head>
         <title>{postData.title}</title>
       </Head>
+      <Button></Button>
       <article>
         <h1 className={utilStyles.headingXl}>{postData.title}</h1>
         <div className={utilStyles.lightText}>
